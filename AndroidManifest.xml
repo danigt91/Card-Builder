@@ -29,6 +29,10 @@
             android:name="io.github.danigt91.cardbuilder.activity.BusquedaActivity"
             android:label="@string/title_activity_busqueda" >
         </activity>
+        <activity
+            android:name="io.github.danigt91.cardbuilder.activity.CartaDetalleActivity"
+            android:label="@string/title_activity_carta_detalle" >
+        </activity>
     </application>
 
 </manifest>

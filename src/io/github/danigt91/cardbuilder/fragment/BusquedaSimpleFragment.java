@@ -6,13 +6,16 @@
  * Button btnBusquedaSimple: realiza la búsqueda en la DB con el texto de etxtBusquedaSimple
  * Button btnBusquedaAvanzada: abre un fragment de búsqueda avanzada
  * boolean buscando: indica si se está realizando la búsqueda para volver a realizarla al recrear la vista (giro de pantalla, ...)
+ * BusquedaSimpleListener bSListener: Listener para delegar la implementación de los métodos de búsqueda
  * 
  * */
 package io.github.danigt91.cardbuilder.fragment;
 
 import io.github.danigt91.cardbuilder.R;
+import io.github.danigt91.cardbuilder.listener.BusquedaSimpleListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,11 +30,21 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 	
 	private boolean buscando;
 	
+	private BusquedaSimpleListener bSListener;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		buscando = false;
+		bSListener = new BusquedaSimpleListener() {
+			
+			// Usamos una implementacion por defecto para el listener
+			@Override
+			public void onBusquedaSimple(String nombre) {
+				Log.d("BusquedaSimpleFragment", "BusquedaSimpleListener");						
+			}
+		};
 	}
 	
 	@Override
@@ -60,7 +73,8 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 	public void onResume(){
 		super.onResume();
 		if(buscando && etxtBusquedaSimple.getText().length()>0){
-			busquedaSimple();
+			bSListener.onBusquedaSimple(etxtBusquedaSimple.getText().toString());
+			buscando = true;
 		}		
 	}
 
@@ -71,7 +85,8 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 		switch (v.getId()) {
 		case R.id.btnBusquedaSimple:
 			
-			busquedaSimple();
+			bSListener.onBusquedaSimple(etxtBusquedaSimple.getText().toString());
+			buscando = true;
 			
 			break;
 
@@ -79,14 +94,10 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 			break;
 		}
 		
-	}
+	}	
 	
-	
-	private void busquedaSimple(){
-		//Obtiene el Fragmento contenedor del ListView y llama a su método busquedaByNombre para rellenarlo
-		ListaCartasFragment lcf = (ListaCartasFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.frgListaCartas);
-		lcf.busquedaByNombre(etxtBusquedaSimple.getText().toString());
-		buscando = true;
+	public void setBusquedaSimpleListener(BusquedaSimpleListener bsl){
+		this.bSListener = bsl;
 	}
 
 }

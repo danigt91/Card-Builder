@@ -1,7 +1,7 @@
 package io.github.danigt91.cardbuilder.fragment;
 
 import io.github.danigt91.cardbuilder.R;
-import io.github.danigt91.cardbuilder.clase.SesionManejador;
+import io.github.danigt91.cardbuilder.controller.SesionManejador;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class CerrarSesionFragment extends Fragment implements OnClickListener {
+public class SesionCerrarFragment extends Fragment implements OnClickListener {
 
 	private Button btnCerrarSesion;
 
@@ -20,7 +20,7 @@ public class CerrarSesionFragment extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		//Inflamos el layout del fragment
-		return inflater.inflate(R.layout.fragment_cerrar_sesion, container, false);
+		return inflater.inflate(R.layout.fragment_sesion_cerrar, container, false);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class CerrarSesionFragment extends Fragment implements OnClickListener {
 			if (getActivity().findViewById(R.id.frgLInicioSesion) != null) {
 
 				//Creamos el fragment inicial contenido en el FrameLayout
-				InicioSesionFragment isf = new InicioSesionFragment();
+				SesionInicioFragment isf = new SesionInicioFragment();
 
 				//Si se quieren pasar argumentos recibidos desde el Intent de la actividad
 				//firstFragment.setArguments(getActivity().getIntent().getExtras());

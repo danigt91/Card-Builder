@@ -1,9 +1,9 @@
 package io.github.danigt91.cardbuilder.activity;
 
 import io.github.danigt91.cardbuilder.R;
-import io.github.danigt91.cardbuilder.clase.SesionManejador;
+import io.github.danigt91.cardbuilder.controller.SesionManejador;
 import io.github.danigt91.cardbuilder.database.SQLiteAdapter;
-import io.github.danigt91.cardbuilder.fragment.CerrarSesionFragment;
+import io.github.danigt91.cardbuilder.fragment.SesionCerrarFragment;
 import io.github.danigt91.cardbuilder.fragment.MenuInicioLoginFragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -42,7 +42,7 @@ public class InicioActivity extends FragmentActivity {
     
     public void recreateSesionIniciada(){
     	//Creamos el fragment inicial contenido en el FrameLayout
-		CerrarSesionFragment csf = new CerrarSesionFragment();
+		SesionCerrarFragment csf = new SesionCerrarFragment();
 		MenuInicioLoginFragment milf = new MenuInicioLoginFragment();
 
 		//Si se quieren pasar argumentos recibidos desde el Intent de la actividad

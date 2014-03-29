@@ -2,7 +2,7 @@ package io.github.danigt91.cardbuilder.async;
 
 import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.activity.InicioActivity;
-import io.github.danigt91.cardbuilder.clase.SesionManejador;
+import io.github.danigt91.cardbuilder.controller.SesionManejador;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -2,7 +2,7 @@ package io.github.danigt91.cardbuilder.fragment;
 
 import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.activity.BusquedaActivity;
-import io.github.danigt91.cardbuilder.clase.SesionManejador;
+import io.github.danigt91.cardbuilder.controller.SesionManejador;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -51,7 +51,7 @@ public class MenuInicioFragment extends Fragment implements OnClickListener {
 
 				if(!sp.getBoolean("identificado", false)){
 					//Creamos el fragment inicial contenido en el FrameLayout
-					InicioSesionFragment isf = new InicioSesionFragment();
+					SesionInicioFragment isf = new SesionInicioFragment();
 
 					//Si se quieren pasar argumentos recibidos desde el Intent de la actividad
 					//firstFragment.setArguments(getActivity().getIntent().getExtras());
@@ -61,7 +61,7 @@ public class MenuInicioFragment extends Fragment implements OnClickListener {
 
 				}else{
 					//Creamos el fragment inicial contenido en el FrameLayout
-					CerrarSesionFragment csf = new CerrarSesionFragment();
+					SesionCerrarFragment csf = new SesionCerrarFragment();
 					MenuInicioLoginFragment milf = new MenuInicioLoginFragment();
 
 					//Si se quieren pasar argumentos recibidos desde el Intent de la actividad

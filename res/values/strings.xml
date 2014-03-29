@@ -16,5 +16,6 @@
     <string name="buscar">Buscar</string>
     <string name="busquedaSimple">Búsqueda</string>
     <string name="busquedaAvanzada">Avanzada</string>
+    <string name="title_activity_carta_detalle">CartaDetalleActivity</string>
 
 </resources>

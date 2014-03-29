@@ -1,7 +1,7 @@
 package io.github.danigt91.cardbuilder.fragment;
 
 import io.github.danigt91.cardbuilder.R;
-import io.github.danigt91.cardbuilder.clase.SesionManejador;
+import io.github.danigt91.cardbuilder.controller.SesionManejador;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-public class InicioSesionFragment extends Fragment implements OnClickListener {
+public class SesionInicioFragment extends Fragment implements OnClickListener {
 
 	private EditText etxtLogin, etxtPassword;
 	private Button btnIniciarSesion, btnRegistrar;
@@ -23,7 +23,7 @@ public class InicioSesionFragment extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		//Inflamos el layout del fragment
-		return inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
+		return inflater.inflate(R.layout.fragment_sesion_inicio, container, false);
 	}
 
 

@@ -119,8 +119,8 @@ public class SQLiteAdapter
 		}
 	}
 
-	//Realiza la busqueda de una carta desde la vista detalle_carta filtrada por su id
-	public Cursor getCartaPorId(int id){
+	//Realiza la busqueda de una carta básica desde la vista detalle_carta filtrada por su id
+	public Cursor getCartaBasicaPorId(int id){
 
 		try
 		{			

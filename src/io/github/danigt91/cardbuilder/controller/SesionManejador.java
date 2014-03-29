@@ -1,4 +1,4 @@
-package io.github.danigt91.cardbuilder.clase;
+package io.github.danigt91.cardbuilder.controller;
 
 import io.github.danigt91.cardbuilder.async.MyHttpPostLogin;
 import io.github.danigt91.cardbuilder.async.MyHttpPostObject;

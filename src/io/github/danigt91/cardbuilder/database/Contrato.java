@@ -84,6 +84,7 @@ public class Contrato {
 		private DetalleCarta() {}
 		public static final String _ID="_id";
 		public static final String DETALLECARTA_TABLE_NAME="detalle_carta";
+		public static final String CARD_NUMBER="card_Nnumber";
 		public static final String CARD_NAME="card_Nname";
 		public static final String SET_NAME="set_Nname";
 		public static final String CARD_SET="Nset";
