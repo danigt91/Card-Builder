@@ -32,7 +32,8 @@ public class InicioActivity extends FragmentActivity {
     }
     
     
-    public void onDestroy(){
+    @Override
+	public void onDestroy(){
     	super.onDestroy();
     	
     	SesionManejador.cerrarSesionAppClose(this);

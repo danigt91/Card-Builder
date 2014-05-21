@@ -54,7 +54,7 @@ public class SQLiteHelper extends SQLiteOpenHelper
 				throw new Error("ErrorCopyingDataBase");
 			}
 		}else{
-			Log.d("MI TAG","no existe la db");
+			Log.d("MI TAG","ya existe la db");
 		}
 	}
 	//Check that the database exists here: /data/data/your package/databases/Da Name

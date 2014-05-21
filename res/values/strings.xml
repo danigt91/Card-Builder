@@ -12,10 +12,23 @@
     <string name="login">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="recordar">Recordar</string>
-    <string name="title_activity_busqueda">BusquedaActivity</string>
+    <string name="title_activity_busqueda">Busqueda Simple</string>
     <string name="buscar">Buscar</string>
     <string name="busquedaSimple">Búsqueda</string>
     <string name="busquedaAvanzada">Avanzada</string>
-    <string name="title_activity_carta_detalle">CartaDetalleActivity</string>
+    <string name="title_activity_carta_detalle">Detalle</string>
+    <string name="title_activity_carta_galeria">Galeria</string>
+    <string name="anterior">&lt;-</string>
+    <string name="siguiente">-&gt;</string>
+    <string name="menos">-</string>
+    <string name="mas">+</string>
+    <string name="title_activity_perfil">Perfil</string>
+    <string name="usuario_nombre">Usuario</string>
+    <string name="barajas">Barajas</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="logros">Logros</string>
+    <string name="configuracion">Configuración</string>
+    <string name="title_activity_favoritos">Favoritos</string>
+    <string name="busqueda_nombre">Buscar por nombre</string>
 
 </resources>

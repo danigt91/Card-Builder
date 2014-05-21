@@ -49,6 +49,7 @@ public class Carta {
 	private String Nlegality_Peasant;
 	private String Nlegality_Pauper;
 	
+	private Baraja baraja;
 	
 	
 	public Carta(){
@@ -605,6 +606,18 @@ public class Carta {
 
 	public void setNlegality_Pauper(String nlegality_Pauper) {
 		Nlegality_Pauper = nlegality_Pauper;
+	}
+
+
+
+	public Baraja getBaraja() {
+		return baraja;
+	}
+
+
+
+	public void setBaraja(Baraja baraja) {
+		this.baraja = baraja;
 	}
 	
 	

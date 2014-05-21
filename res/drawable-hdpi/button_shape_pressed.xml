@@ -10,5 +10,7 @@
         android:top="1dp" />
 
     <solid android:color="#ADDBFF" />
+    
+    <stroke android:width="5dp" android:color="@color/white" />
 
 </shape>

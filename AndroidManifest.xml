@@ -33,6 +33,18 @@
             android:name="io.github.danigt91.cardbuilder.activity.CartaDetalleActivity"
             android:label="@string/title_activity_carta_detalle" >
         </activity>
+        <activity
+            android:name="io.github.danigt91.cardbuilder.activity.CartaGaleriaActivity"
+            android:label="@string/title_activity_carta_galeria" >
+        </activity>
+        <activity
+            android:name="io.github.danigt91.cardbuilder.activity.PerfilActivity"
+            android:label="@string/perfil" >
+        </activity>
+        <activity
+            android:name="io.github.danigt91.cardbuilder.activity.FavoritosActivity"
+            android:label="@string/title_activity_favoritos" >
+        </activity>
     </application>
 
 </manifest>

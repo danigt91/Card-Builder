@@ -29,6 +29,7 @@ public class MenuInicioFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		
 
 		btnBusqueda = (Button) getActivity().findViewById(R.id.btnBusqueda);
 		btnBusqueda.setOnClickListener(this);

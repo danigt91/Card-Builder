@@ -41,20 +41,21 @@ public class MyHttpPostLogin extends MyHttpPost {
 		super.doInBackground(params);
 		String resultado = super.result;		
 
+		//Comprobamos si el login es correcto
 		bLogin = resultado.equals("1");
 		Log.d("MyHttpPostLogin", "Resultado login: "+bLogin);
 
 		SharedPreferences sp = SesionManejador.getSesionSharedPreferences(context);
 		Editor spe = sp.edit();
 
-		spe.putBoolean("identificado", bLogin);
-		spe.putBoolean("recordar", recordar && bLogin);		
+		spe.putBoolean(SesionManejador.identificado, bLogin);
+		spe.putBoolean(SesionManejador.recordar, recordar && bLogin);		
 		if(bLogin){
-			spe.putString("login", login);
-			spe.putString("pass", pass);
+			spe.putString(SesionManejador.login, login);
+			spe.putString(SesionManejador.pass, pass);
 		}else{
-			spe.putString("login", null);
-			spe.putString("pass", null);
+			spe.putString(SesionManejador.login, null);
+			spe.putString(SesionManejador.pass, null);
 		}
 
 		spe.commit();

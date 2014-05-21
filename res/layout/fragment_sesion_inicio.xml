@@ -10,49 +10,57 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/login" />
+        android:text="@string/login"
+        android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/etxtLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text" />
+        android:hint="@string/login"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray_transparent" />
 
     <TextView
         android:id="@+id/txtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/password" />
+        android:text="@string/password"
+        android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/etxtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword" />
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray_transparent" />
 
-    <Button
+    <io.github.danigt91.cardbuilder.view.MyButton
         android:id="@+id/btnIniciarSesion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:background="@drawable/button_selector"
-        android:text="@string/iniciarSesion"
-        android:textColor="@color/button_selector_color" />
+        android:text="@string/iniciarSesion" />
 
-    <Button
+    <io.github.danigt91.cardbuilder.view.MyButton
         android:id="@+id/btnRegistrar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:background="@drawable/button_selector"
-        android:text="@string/registrar"
-        android:textColor="@color/button_selector_color" />
+        android:text="@string/registrar" />
 
     <CheckBox
         android:id="@+id/ckbRecordar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/recordar" />
+        android:hint="@string/recordar"
+        android:text="@string/recordar"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray_transparent"
+        android:textColorLink="@color/gray_transparent" />
 
 </LinearLayout>

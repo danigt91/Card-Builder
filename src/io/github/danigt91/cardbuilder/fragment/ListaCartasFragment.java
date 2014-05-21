@@ -23,6 +23,16 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 	
 	private SQLiteAdapter mDbHelper;
 	private Cursor cursor;
+	public int index, top;
+	
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		index = -1;
+		top = -1;
+	}
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +49,7 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 		setRetainInstance(true);
 		
 		listCartas = (ListView) getActivity().findViewById(R.id.listCartas);
-		listCartas.setOnItemClickListener(this);
+		listCartas.setOnItemClickListener(this);		
 		
 		Bundle extras = getActivity().getIntent().getExtras();
 		if(extras != null){
@@ -81,10 +91,20 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 		
+		index = listCartas.getFirstVisiblePosition();
+		View v = listCartas.getChildAt(0);
+		top = (v == null) ? 0 : v.getTop();
 		Intent intent = new Intent(getActivity(), CartaDetalleActivity.class);
 		intent.putExtra("idCarta", (int) id);
 		startActivity(intent);
 		
+	}
+	
+	
+	public void reposicionar(){
+		if(index != -1 && top != -1){
+			listCartas.setSelectionFromTop(index, top);
+		}
 	}
 	
 	

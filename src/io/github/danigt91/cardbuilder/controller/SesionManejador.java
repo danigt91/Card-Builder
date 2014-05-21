@@ -17,16 +17,22 @@ public class SesionManejador {
 	 * @param pass: Contraseña del usuario
 	 * @param recordar: Booleano para autologueo
 	 */
+	
+	public static final String login = "login";
+	public static final String pass = "pass";
+	public static final String recordar = "recordar";
+	public static final String identificado = "identificado";
+	
 	public static void iniciarSesion(Context context, String login, String pass, boolean recordar){
 		
 		if(login != null && pass != null){
 			
 			String[][] parametros = new String[2][2];
-			parametros[0] = new String[]{"login",login};
-			parametros[1] = new String[]{"pass",pass};
+			parametros[0] = new String[]{SesionManejador.login,login};
+			parametros[1] = new String[]{SesionManejador.pass,pass};
 			
 			//Creamos nuestro objeto de MyHttpPost para la petición
-			MyHttpPostObject mhpo = new MyHttpPostObject("http://magic.wmap.herobo.com/", "login", parametros);
+			MyHttpPostObject mhpo = new MyHttpPostObject("http://magic.wmap.herobo.com/", SesionManejador.login, parametros);
 			
 			//Creamos la tarea asincora que realizara el login
 			MyHttpPostLogin myPost = new MyHttpPostLogin(context, login, pass, recordar);
@@ -49,10 +55,10 @@ public class SesionManejador {
 		SharedPreferences sp = SesionManejador.getSesionSharedPreferences(context);
 		Editor spe = sp.edit();
 
-		spe.putBoolean("recordar", false);
-		spe.putBoolean("identificado", false);
-		spe.putString("usuario", null);
-		spe.putString("pass", null);
+		spe.putBoolean(SesionManejador.recordar, false);
+		spe.putBoolean(SesionManejador.identificado, false);
+		spe.putString(SesionManejador.login, null);
+		spe.putString(SesionManejador.pass, null);
 
 		spe.commit();
 	}
@@ -67,12 +73,12 @@ public class SesionManejador {
 		SharedPreferences sp = SesionManejador.getSesionSharedPreferences(context);
 		Editor spe = sp.edit();
 		//Cerramos la sesión abierta
-		spe.putBoolean("identificado", false);
+		spe.putBoolean(SesionManejador.identificado, false);
 		
 		//Si está activo recordar no eliminamos la información para el autologueo
-		if(!sp.getBoolean("recordar", false)){
-			spe.putString("usuario", null);
-			spe.putString("pass", null);
+		if(!sp.getBoolean(SesionManejador.recordar, false)){
+			spe.putString(SesionManejador.login, null);
+			spe.putString(SesionManejador.pass, null);
 		}
 
 		spe.commit();

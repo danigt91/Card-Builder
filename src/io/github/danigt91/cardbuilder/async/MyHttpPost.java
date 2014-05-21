@@ -20,6 +20,7 @@ public abstract class MyHttpPost extends AsyncTask<MyHttpPostObject, Void, Void>
 	protected Void doInBackground(MyHttpPostObject... params) {
 
 		InputStream is = downloadUrl(params[0]);
+		//Asignamos el String de salida de la petición
 		result = inputStreamToString(is);
 
 		return null;
@@ -32,27 +33,30 @@ public abstract class MyHttpPost extends AsyncTask<MyHttpPostObject, Void, Void>
 
 
 	protected InputStream downloadUrl(MyHttpPostObject myHttpPostObject) {
-		InputStream myInputStream =null;
+		InputStream myInputStream = null;
 		StringBuilder sb = new StringBuilder();
-		//adding some data to send along with the request to the server
+		//Añadimos la acción de la petición
 		sb.append("accion="+myHttpPostObject.accion);
+		//Añadimos los parametros POST
 		for(String[] s: myHttpPostObject.parametros){
 			sb.append("&"+s[0]+"="+s[1]);
 		}
 		try {
+			//Creamos la conexion
 			URL url = new URL(myHttpPostObject.host);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setDoOutput(true);
+			conn.setReadTimeout(10000);
+			conn.setDoOutput(true);			
 			conn.setRequestMethod("POST");
 			OutputStreamWriter wr = new OutputStreamWriter(conn
 					.getOutputStream());
-			// this is were we're adding post data to the request
+			//Escribimos en el stream de salida
 			wr.write(sb.toString());
 			wr.flush();
+			//Asignamos el stream de entrada
 			myInputStream = conn.getInputStream();
 			wr.close();
 		} catch (Exception e) {
-			//handle the exception !
 			Log.d("MyHttpPost",e.getMessage());
 		}
 		return myInputStream;
@@ -60,7 +64,7 @@ public abstract class MyHttpPost extends AsyncTask<MyHttpPostObject, Void, Void>
 
 
 
-	// Fast Implementation
+	// Convierte un stream de entrada en un String
 	protected String inputStreamToString(InputStream is) {
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is), 4096);
 		String line;
