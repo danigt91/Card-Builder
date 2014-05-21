@@ -11,7 +11,8 @@
         android:hint="@string/busqueda_nombre"
         android:inputType="text"
         android:textColor="@color/white"
-        android:textColorHint="@color/gray_transparent" />
+        android:textColorHint="@color/gray_transparent"
+        android:textCursorDrawable="@null" />
 
     <LinearLayout
         android:layout_width="match_parent"

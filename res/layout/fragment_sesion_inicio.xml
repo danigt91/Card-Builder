@@ -20,7 +20,8 @@
         android:hint="@string/login"
         android:inputType="text"
         android:textColor="@color/white"
-        android:textColorHint="@color/gray_transparent" />
+        android:textColorHint="@color/gray_transparent"
+        android:textCursorDrawable="@null" />
 
     <TextView
         android:id="@+id/txtPassword"
@@ -37,7 +38,8 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:textColor="@color/white"
-        android:textColorHint="@color/gray_transparent" />
+        android:textColorHint="@color/gray_transparent"
+        android:textCursorDrawable="@null" />
 
     <io.github.danigt91.cardbuilder.view.MyButton
         android:id="@+id/btnIniciarSesion"

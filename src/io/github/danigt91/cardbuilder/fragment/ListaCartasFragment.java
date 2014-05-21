@@ -6,6 +6,8 @@ import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.activity.CartaDetalleActivity;
 import io.github.danigt91.cardbuilder.adapter.ListaCartasAdapter;
 import io.github.danigt91.cardbuilder.database.SQLiteAdapter;
+import io.github.danigt91.cardbuilder.listener.MyListViewListener;
+import io.github.danigt91.cardbuilder.view.MyListView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,23 +16,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
 public class ListaCartasFragment extends Fragment implements OnItemClickListener {
 	
-	private ListView listCartas;
+	private MyListView listCartas;
 	
 	private SQLiteAdapter mDbHelper;
 	private Cursor cursor;
-	public int index, top;
-	
+
+	private MyListViewListener listViewListener;	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);
-		index = -1;
-		top = -1;
+		super.onCreate(savedInstanceState);		
 	}
 	
 	
@@ -48,7 +48,7 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 		
 		setRetainInstance(true);
 		
-		listCartas = (ListView) getActivity().findViewById(R.id.listCartas);
+		listCartas = (MyListView) getActivity().findViewById(R.id.listCartas);
 		listCartas.setOnItemClickListener(this);		
 		
 		Bundle extras = getActivity().getIntent().getExtras();
@@ -76,9 +76,13 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 		mDbHelper.open();
 
 		cursor = mDbHelper.getListadoCartasPorNname(nombre);
-		ListaCartasAdapter ca = new ListaCartasAdapter(getActivity(), cursor, 0);
+		ListaCartasAdapter ca = new ListaCartasAdapter(getActivity(), cursor, 0, listCartas);
 		
 		listCartas.setAdapter(ca);
+		
+		if(cursor.getCount()==0){
+			Toast.makeText(getActivity(), "Sin resultados", Toast.LENGTH_LONG).show();
+		}
 		
 	}
 	
@@ -91,21 +95,21 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 		
-		index = listCartas.getFirstVisiblePosition();
+		listCartas.setIndexPosition(listCartas.getFirstVisiblePosition());
 		View v = listCartas.getChildAt(0);
-		top = (v == null) ? 0 : v.getTop();
+		listCartas.setTopPosition((v == null) ? 0 : v.getTop());
 		Intent intent = new Intent(getActivity(), CartaDetalleActivity.class);
 		intent.putExtra("idCarta", (int) id);
 		startActivity(intent);
 		
+	}	
+	
+	
+	public MyListView getMyListView(){
+		return listCartas;
 	}
 	
 	
-	public void reposicionar(){
-		if(index != -1 && top != -1){
-			listCartas.setSelectionFromTop(index, top);
-		}
-	}
 	
 	
 

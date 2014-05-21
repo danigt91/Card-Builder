@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
+import android.widget.Toast;
 
 public class MyHttpPostLogin extends MyHttpPost {
 	
@@ -43,7 +44,7 @@ public class MyHttpPostLogin extends MyHttpPost {
 
 		//Comprobamos si el login es correcto
 		bLogin = resultado.equals("1");
-		Log.d("MyHttpPostLogin", "Resultado login: "+bLogin);
+		Log.d("MyHttpPostLogin", "Resultado login: "+resultado);
 
 		SharedPreferences sp = SesionManejador.getSesionSharedPreferences(context);
 		Editor spe = sp.edit();
@@ -81,6 +82,13 @@ public class MyHttpPostLogin extends MyHttpPost {
 				//Remplazamos el fragment de inicioSesion
 				ia.recreateSesionIniciada();
 
+			}else{
+				//Avisamos si da error
+				if(super.result.equals("-1")){
+					Toast.makeText(context, "Error de login", Toast.LENGTH_SHORT).show();
+				}else if(super.result.equals("-2")){
+					Toast.makeText(context, "Error de registro", Toast.LENGTH_SHORT).show();
+				}
 			}
 		}
 

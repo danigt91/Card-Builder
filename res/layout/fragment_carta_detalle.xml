@@ -95,11 +95,24 @@
                 android:layout_weight="10"
                 android:textColor="@color/white" />
 
-            <ImageView
-                android:id="@+id/imgCartaImagen"
+            <AbsoluteLayout
+                android:id="@+id/rlImagenes"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="90" />
+                android:layout_weight="90" >
+
+                <ImageView
+                    android:id="@+id/imgCartaImagen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name" />
+
+                <ImageView
+                    android:id="@+id/imgCargando"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name" />
+            </AbsoluteLayout>
         </LinearLayout>
     </LinearLayout>
 

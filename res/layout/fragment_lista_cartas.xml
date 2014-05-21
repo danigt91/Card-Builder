@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ListView
+    <io.github.danigt91.cardbuilder.view.MyListView
         android:id="@+id/listCartas"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-    </ListView>
+    </io.github.danigt91.cardbuilder.view.MyListView>
 
 </LinearLayout>

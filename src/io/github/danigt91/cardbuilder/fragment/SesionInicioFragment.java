@@ -2,11 +2,13 @@ package io.github.danigt91.cardbuilder.fragment;
 
 import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.controller.SesionManejador;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -58,21 +60,22 @@ public class SesionInicioFragment extends Fragment implements OnClickListener {
 		case R.id.btnIniciarSesion:
 			
 			//Intentamos iniciar sesion
-			SesionManejador.iniciarSesion(getActivity(), etxtLogin.getText().toString(), etxtPassword.getText().toString(), ckbRecordar.isChecked());			
+			SesionManejador.iniciarSesion(getActivity(), etxtLogin.getText().toString(), etxtPassword.getText().toString(), ckbRecordar.isChecked());
 
 			break;
 
 		case R.id.btnRegistrar:
-
+			SesionManejador.crearCuenta(getActivity(), etxtLogin.getText().toString(), etxtPassword.getText().toString(), ckbRecordar.isChecked());
 			break;
 
 		}
-
 		
-
-//		Intent ia = new Intent(this.getActivity(), InicioActivity.class);
-//		startActivity(ia);		
-//		getActivity().finish();
+		//Escondemos el teclado
+		InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
+				Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(etxtLogin.getWindowToken(), 0);
+		imm.hideSoftInputFromWindow(etxtPassword.getWindowToken(), 0);
+		
 
 	}	
 

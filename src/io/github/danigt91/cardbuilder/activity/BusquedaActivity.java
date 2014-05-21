@@ -13,7 +13,6 @@ public class BusquedaActivity extends FragmentActivity implements BusquedaSimple
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		setContentView(R.layout.activity_busqueda);
 		
 		BusquedaSimpleFragment bsf = (BusquedaSimpleFragment) getSupportFragmentManager().findFragmentById(R.id.frgBusquedaSimple);
@@ -40,7 +39,7 @@ public class BusquedaActivity extends FragmentActivity implements BusquedaSimple
 		ListaCartasFragment lcf = (ListaCartasFragment) getSupportFragmentManager().findFragmentById(R.id.frgListaCartas);
 		lcf.busquedaByNombre(nombre);
 		//Reposiciona la posicion de scroll del ListView
-		lcf.reposicionar();
+		lcf.getMyListView().reposicionar();
 	}
 
 }

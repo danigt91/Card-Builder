@@ -13,6 +13,7 @@ package io.github.danigt91.cardbuilder.fragment;
 
 import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.listener.BusquedaSimpleListener;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,25 +21,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class BusquedaSimpleFragment extends Fragment implements OnClickListener {
-	
+
 	private EditText etxtBusquedaSimple;
 	private Button btnBusquedaSimple;
-	
+
 	private boolean buscando;
-	
+
 	private BusquedaSimpleListener bSListener;
-	
-	
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		buscando = false;
 		bSListener = new BusquedaSimpleListener() {
-			
+
 			// Usamos una implementacion por defecto para el listener
 			@Override
 			public void onBusquedaSimple(String nombre) {
@@ -46,56 +48,61 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 			}
 		};
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		//Inflamos el layout del fragment
 		return inflater.inflate(R.layout.fragment_busqueda_simple, container, false);
 	}
-	
-	
+
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		
+
 		setRetainInstance(true);
-		
+
 		etxtBusquedaSimple = (EditText) getActivity().findViewById(R.id.etxtBusquedaSimple);
-		
+
 		btnBusquedaSimple = (Button) getActivity().findViewById(R.id.btnBusquedaSimple);
 		btnBusquedaSimple.setOnClickListener(this);		
-		
+
 	}
-	
-	
+
+
 	@Override
 	public void onResume(){
 		super.onResume();
 		if(buscando && etxtBusquedaSimple.getText().length()>0){
 			bSListener.onBusquedaSimple(etxtBusquedaSimple.getText().toString());
-			buscando = true;
+			buscando = true;			
 		}		
 	}
 
 
 	@Override
 	public void onClick(View v) {
-		
+
 		switch (v.getId()) {
 		case R.id.btnBusquedaSimple:
-			
+
 			bSListener.onBusquedaSimple(etxtBusquedaSimple.getText().toString());
 			buscando = true;
 			
+			//Escondemos el teclado
+			InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
+					Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(etxtBusquedaSimple.getWindowToken(), 0);
+
 			break;
 
 		default:
 			break;
 		}
-		
+
 	}	
-	
+
 	public void setBusquedaSimpleListener(BusquedaSimpleListener bsl){
 		this.bSListener = bsl;
 	}
