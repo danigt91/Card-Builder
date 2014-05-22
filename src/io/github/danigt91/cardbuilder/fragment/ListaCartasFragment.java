@@ -15,6 +15,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -25,12 +27,16 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 	
 	private SQLiteAdapter mDbHelper;
 	private Cursor cursor;
+	
+	private int index, top;
 
-	private MyListViewListener listViewListener;	
+	private MyListViewListener listViewListener;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);		
+		super.onCreate(savedInstanceState);
+		index = -1;
+		top = -1;
 	}
 	
 	
@@ -49,7 +55,12 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 		setRetainInstance(true);
 		
 		listCartas = (MyListView) getActivity().findViewById(R.id.listCartas);
-		listCartas.setOnItemClickListener(this);		
+		listCartas.setOnItemClickListener(this);
+		
+		if(index != -1 && top != -1 && index != listCartas.getIndexPosition() && top != listCartas.getTopPosition()){
+			listCartas.setIndexPosition(index);
+			listCartas.setTopPosition(top);
+		}		
 		
 		Bundle extras = getActivity().getIntent().getExtras();
 		if(extras != null){
@@ -95,18 +106,50 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 		
-		listCartas.setIndexPosition(listCartas.getFirstVisiblePosition());
-		View v = listCartas.getChildAt(0);
-		listCartas.setTopPosition((v == null) ? 0 : v.getTop());
+		actualizarDatosScroll(listCartas);
 		Intent intent = new Intent(getActivity(), CartaDetalleActivity.class);
 		intent.putExtra("idCarta", (int) id);
 		startActivity(intent);
 		
-	}	
+	}
+	
+	@Override
+	public void onPause(){
+		super.onPause();
+		actualizarDatosScroll(listCartas);
+	}
 	
 	
 	public MyListView getMyListView(){
 		return listCartas;
+	}
+
+
+	public int getIndex() {
+		return index;
+	}
+
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+
+	public int getTop() {
+		return top;
+	}
+
+
+	public void setTop(int top) {
+		this.top = top;
+	}
+	
+	private void actualizarDatosScroll(AbsListView view){
+		index = view.getFirstVisiblePosition();
+		View v = view.getChildAt(0);
+		top = (v == null) ? 0 : v.getTop();
+		listCartas.setIndexPosition(index);
+		listCartas.setTopPosition(top);
 	}
 	
 	

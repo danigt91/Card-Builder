@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class CartaDetalleFragment extends Fragment implements OnClickListener, DescargaImagenCartaListener {
@@ -30,6 +31,7 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 	txtCartaLealtad, txtCartaArtista, txtCartaHabilidad, txtCartaCita;
 
 	private ImageView imgCartaImagen;
+	private ProgressBar progressImagen;
 	private Bitmap bitmap;
 	
 	private LruCache<String, Bitmap> mMemoryCache;
@@ -78,6 +80,8 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 		txtCartaHabilidad = (TextView) getActivity().findViewById(R.id.txtCartaHabilidad);
 		txtCartaCita = (TextView) getActivity().findViewById(R.id.txtCartaCita);
 		imgCartaImagen = (ImageView) getActivity().findViewById(R.id.imgCartaImagen);
+		progressImagen = (ProgressBar) getActivity().findViewById(R.id.progressImagen);
+		progressImagen.setVisibility(View.INVISIBLE);
 		
 		loadBitmap("imagen", imgCartaImagen);
 		if(bitmap != null){
@@ -144,7 +148,8 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 					imgCartaImagen.setTag(1);
 					DescargaImagenCarta dic = new DescargaImagenCarta(getActivity(), imgCartaImagen);
 					dic.setDescargaImagenCartaListener(this);
-					dic.execute("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+carta.getNid().toLowerCase()+"&type=card");					
+					dic.execute("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+carta.getNid().toLowerCase()+"&type=card");
+					progressImagen.setVisibility(View.VISIBLE);
 				}
 			}else{				
 				lanzarIntentGaleria();
@@ -161,6 +166,7 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 
 	@Override
 	public void onDescargaFinalizada(Bitmap img) {
+		progressImagen.setVisibility(View.INVISIBLE);
 		bitmap = img;
 		imgCartaImagen.setImageBitmap(img);
 		imgCartaImagen.setTag(1);

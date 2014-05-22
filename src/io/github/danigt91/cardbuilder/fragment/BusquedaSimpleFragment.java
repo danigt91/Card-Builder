@@ -44,7 +44,7 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 			// Usamos una implementacion por defecto para el listener
 			@Override
 			public void onBusquedaSimple(String nombre) {
-				Log.d("BusquedaSimpleFragment", "BusquedaSimpleListener");						
+				Log.d("BusquedaSimpleFragment", "BusquedaSimpleListener");
 			}
 		};
 	}
@@ -76,7 +76,6 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 		super.onResume();
 		if(buscando && etxtBusquedaSimple.getText().length()>0){
 			bSListener.onBusquedaSimple(etxtBusquedaSimple.getText().toString());
-			buscando = true;			
 		}		
 	}
 
@@ -86,6 +85,16 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 
 		switch (v.getId()) {
 		case R.id.btnBusquedaSimple:
+			
+			//Reseteamos el scroll del listview para nuevas busquedas
+			Fragment aux = getActivity().getSupportFragmentManager().findFragmentById(R.id.frgListaCartas);
+			if(aux != null && aux instanceof ListaCartasFragment){
+				ListaCartasFragment lcf = ((ListaCartasFragment) aux);
+				lcf.setIndex(-1);
+				lcf.setTop(-1);
+				lcf.getMyListView().setIndexPosition(-1);
+				lcf.getMyListView().setTopPosition(-1);
+			}
 
 			bSListener.onBusquedaSimple(etxtBusquedaSimple.getText().toString());
 			buscando = true;
