@@ -1,11 +1,15 @@
 package io.github.danigt91.cardbuilder.controller;
 
+import io.github.danigt91.cardbuilder.R;
+import io.github.danigt91.cardbuilder.activity.InicioActivity;
 import io.github.danigt91.cardbuilder.async.MyHttpPostLogin;
 import io.github.danigt91.cardbuilder.async.MyHttpPostObject;
+import io.github.danigt91.cardbuilder.listener.LoginListener;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
+import android.widget.Toast;
 
 public class SesionManejador {
 
@@ -27,6 +31,39 @@ public class SesionManejador {
 	public static final String loginAction = "login";
 	public static final String crearUsuarioAction = "crearUsuario";
 	
+	private static LoginListener loginListenerImpl = new LoginListener() {
+		
+		@Override
+		public void onPeticionFinalizada(Context context, boolean exito, String codigo) {
+			
+			//Si el contexto pasado es instancia de InicioAtivity
+			if(context instanceof InicioActivity){
+				//Si sesion iniciada y FrameLayout existe
+				InicioActivity ia = ((InicioActivity) context);
+				if (exito && ia.findViewById(R.id.frgLInicioSesion) != null) {
+					
+					//Remplazamos el fragment de inicioSesion
+					ia.recreateSesionIniciada();
+
+				}else{
+					if(codigo == null){
+						Toast.makeText(context, "Error de conexion", Toast.LENGTH_SHORT).show();
+					}else{
+						if(codigo.equals("-1")){
+							Toast.makeText(context, "Error de login", Toast.LENGTH_SHORT).show();
+						}else if(codigo.equals("-2")){
+							Toast.makeText(context, "Error de registro", Toast.LENGTH_SHORT).show();
+						}else{
+							Toast.makeText(context, "Error de servidor", Toast.LENGTH_SHORT).show();
+						}
+					}
+					//Avisamos si da error				
+				}
+			}
+			
+		}
+	};
+	
 	public static long idUsuarioLogueado(Context context){
 		SharedPreferences sp = SesionManejador.getSesionSharedPreferences(context);
 		return sp.getLong(SesionManejador.id, 0);
@@ -46,7 +83,8 @@ public class SesionManejador {
 			//Creamos la tarea asincrona que realizara el login
 			MyHttpPostLogin myPost = new MyHttpPostLogin(context, login, pass, recordar);
 			//Ejecutamos la tarea asincrona con el MyHttpPostObject
-			myPost.execute(mhpo);			
+			myPost.setLoginListener(loginListenerImpl);
+			myPost.execute(mhpo);						
 
 		}else{
 			Log.d("SesionManejador", "Inicio de sesion - Login o Password null");
@@ -110,7 +148,8 @@ public class SesionManejador {
 			//Creamos la tarea asincrona que realizara el login
 			MyHttpPostLogin myPost = new MyHttpPostLogin(context, login, pass, recordar);
 			//Ejecutamos la tarea asincrona con el MyHttpPostObject
-			myPost.execute(mhpo);			
+			myPost.setLoginListener(loginListenerImpl);
+			myPost.execute(mhpo);						
 
 		}else{
 			Log.d("SesionManejador", "Inicio de sesion - Login o Password null");

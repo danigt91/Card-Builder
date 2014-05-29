@@ -98,6 +98,27 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 	public void busquedaByCriteria(Map<String, Object> criterios){
 		// TODO
 	}
+	
+	
+	public void busquedaById(int id){
+		busquedaByIds(String.valueOf(id));
+	}
+	
+	public void busquedaByIds(String... ids){
+		
+		mDbHelper = new SQLiteAdapter(getActivity());            
+		mDbHelper.open();
+
+		cursor = mDbHelper.getListadoCartasPorId(ids);
+		ListaCartasAdapter ca = new ListaCartasAdapter(getActivity(), cursor, 0, listCartas);
+
+		listCartas.setAdapter(ca);
+
+		if(cursor.getCount()==0){
+			Toast.makeText(getActivity(), "Sin resultados", Toast.LENGTH_LONG).show();
+		}
+		
+	}
 
 
 	@Override

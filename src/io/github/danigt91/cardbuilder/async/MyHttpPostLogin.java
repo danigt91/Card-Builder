@@ -3,6 +3,7 @@ package io.github.danigt91.cardbuilder.async;
 import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.activity.InicioActivity;
 import io.github.danigt91.cardbuilder.controller.SesionManejador;
+import io.github.danigt91.cardbuilder.listener.LoginListener;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,12 +18,22 @@ public class MyHttpPostLogin extends MyHttpPost {
 	private boolean bLogin, recordar;
 	
 	private ProgressDialog pd;
+	
+	private LoginListener loginListener;
 
 	public MyHttpPostLogin(Context context, String login, String pass, boolean recordar){
 		this.context = context;
 		this.login = login;
 		this.pass = pass;
 		this.recordar = recordar;
+		loginListener = new LoginListener() {
+			
+			@Override
+			public void onPeticionFinalizada(Context context, boolean exito,
+					String codigo) {
+				Log.d("MyHttpPostLogin", "Exito de login: "+exito+", Codigo de login: "+codigo);				
+			}
+		};
 	}
 	
 	
@@ -80,31 +91,13 @@ public class MyHttpPostLogin extends MyHttpPost {
 			pd.dismiss();
 		}
 		
-		//Si el contexto pasado es instancia de InicioAtivity
-		if(context instanceof InicioActivity){
-			//Si sesion iniciada y FrameLayout existe
-			InicioActivity ia = ((InicioActivity) context);
-			if (bLogin && ia.findViewById(R.id.frgLInicioSesion) != null) {
-				
-				//Remplazamos el fragment de inicioSesion
-				ia.recreateSesionIniciada();
+		loginListener.onPeticionFinalizada(context, bLogin, super.result);		
 
-			}else{
-				if(super.result != null){
-					Toast.makeText(context, "Error de conexion", Toast.LENGTH_SHORT).show();
-				}else{
-					if(super.result.equals("-1")){
-						Toast.makeText(context, "Error de login", Toast.LENGTH_SHORT).show();
-					}else if(super.result.equals("-2")){
-						Toast.makeText(context, "Error de registro", Toast.LENGTH_SHORT).show();
-					}else{
-						Toast.makeText(context, "Error de servidor", Toast.LENGTH_SHORT).show();
-					}
-				}
-				//Avisamos si da error				
-			}
-		}
-
+	}
+	
+	
+	public void setLoginListener(LoginListener loginListener){
+		this.loginListener = loginListener;
 	}
 
 }

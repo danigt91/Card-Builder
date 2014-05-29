@@ -44,8 +44,9 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 			// Usamos una implementacion por defecto para el listener
 			@Override
 			public void onBusquedaSimple(String nombre) {
-				Log.d("BusquedaSimpleFragment", "BusquedaSimpleListener");
+				Log.d("BusquedaSimpleFragment", "onBusquedaSimple");
 			}
+
 		};
 	}
 

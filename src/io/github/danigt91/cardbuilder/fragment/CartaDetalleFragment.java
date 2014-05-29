@@ -5,11 +5,15 @@ import java.io.ByteArrayOutputStream;
 import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.activity.CartaGaleriaActivity;
 import io.github.danigt91.cardbuilder.async.DescargaImagenCarta;
+import io.github.danigt91.cardbuilder.async.MyHttpPostFavorito;
 import io.github.danigt91.cardbuilder.controller.CartaManejador;
 import io.github.danigt91.cardbuilder.entity.Carta;
 import io.github.danigt91.cardbuilder.listener.DescargaImagenCartaListener;
+import io.github.danigt91.cardbuilder.listener.FavoritoListener;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.LruCache;
@@ -17,11 +21,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class CartaDetalleFragment extends Fragment implements OnClickListener, DescargaImagenCartaListener {
+public class CartaDetalleFragment extends Fragment implements OnClickListener, DescargaImagenCartaListener, FavoritoListener {
 
 
 	private Carta carta;
@@ -30,27 +37,33 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 	txtCartaRareza, txtCartaCoste, txtCartaCosteConvertido, txtCartaPoder, 
 	txtCartaLealtad, txtCartaArtista, txtCartaHabilidad, txtCartaCita;
 
+	private CheckBox ckbFavorito;
+	private ProgressBar progressFavorito;
+	private boolean firstTime;
+
 	private ImageView imgCartaImagen;
 	private ProgressBar progressImagen;
 	private Bitmap bitmap;
-	
+
 	private LruCache<String, Bitmap> mMemoryCache;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
+
+		firstTime = true;
+
 		//Habilitamos la cache para las imagenes
 		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-		
-	    final int cacheSize = maxMemory / 8;
 
-	    mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
-	        @Override
-	        protected int sizeOf(String key, Bitmap bitmap) {
-	            return bitmap.getRowBytes() * bitmap.getHeight();
-	        }
-	    };
+		final int cacheSize = maxMemory / 8;
+
+		mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
+			@Override
+			protected int sizeOf(String key, Bitmap bitmap) {
+				return bitmap.getRowBytes() * bitmap.getHeight();
+			}
+		};
 
 	}
 
@@ -79,24 +92,39 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 		txtCartaArtista = (TextView) getActivity().findViewById(R.id.txtCartaArtista);
 		txtCartaHabilidad = (TextView) getActivity().findViewById(R.id.txtCartaHabilidad);
 		txtCartaCita = (TextView) getActivity().findViewById(R.id.txtCartaCita);
+
+		ckbFavorito = (CheckBox) getActivity().findViewById(R.id.ckbFavorito);
+		progressFavorito = (ProgressBar) getActivity().findViewById(R.id.progressFavorito);
+		ckbFavorito.setOnClickListener(this);
+
 		imgCartaImagen = (ImageView) getActivity().findViewById(R.id.imgCartaImagen);
 		progressImagen = (ProgressBar) getActivity().findViewById(R.id.progressImagen);
 		progressImagen.setVisibility(View.INVISIBLE);
-		
+
 		loadBitmap("imagen", imgCartaImagen);
 		if(bitmap != null){
 			imgCartaImagen.setImageBitmap(bitmap);
 			imgCartaImagen.setTag(1);
 		}
-		
+
 		imgCartaImagen.setOnClickListener(this);
-		
+
 		Bundle extras = getActivity().getIntent().getExtras();
 		if(extras != null){
 			int idCarta = extras.getInt("idCarta");
 			if(idCarta>0){
 				carta = CartaManejador.obtenerCartaBasica(getActivity(), idCarta);
 				cargarDetalles();
+				if(firstTime){
+					ckbFavorito.setVisibility(View.INVISIBLE);
+					MyHttpPostFavorito myPost = CartaManejador.esFavorita(getActivity(), this.getView(), Long.valueOf(carta.get_id()));
+					if(myPost != null){
+						myPost.setFavoritoListener(this);
+					}
+					firstTime = false;
+				}else{
+					progressFavorito.setVisibility(View.INVISIBLE);
+				}
 			}
 		}
 
@@ -157,6 +185,13 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 
 			break;
 
+		case R.id.ckbFavorito:
+			MyHttpPostFavorito myPost = CartaManejador.toggleFavorita(getActivity(), v, Long.valueOf(carta.get_id()));
+			if(myPost != null){
+				myPost.setFavoritoListener(this);
+			}			
+			break;
+
 		default:
 			break;
 		}
@@ -183,28 +218,37 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 		intent.putExtra("nombreCarta", carta.getNname());
 		startActivity(intent);
 	}
-	
-	
+
+
 	public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
-	    if (getBitmapFromMemCache(key) == null) {
-	        mMemoryCache.put(key, bitmap);
-	    }
+		if (getBitmapFromMemCache(key) == null) {
+			mMemoryCache.put(key, bitmap);
+		}
 	}
-	
+
 	public Bitmap getBitmapFromMemCache(String key) {
-	    return mMemoryCache.get(key);
+		return mMemoryCache.get(key);
 	}
-	
+
 	public void loadBitmap(String imageKey, ImageView imageView) {
+
+		final Bitmap bitmap = getBitmapFromMemCache(imageKey);
+		if (bitmap != null) {
+			imgCartaImagen.setImageBitmap(bitmap);
+			imgCartaImagen.setTag(1);
+		} else {
+			imgCartaImagen.setImageResource(R.drawable.back);
+			imgCartaImagen.setTag(R.drawable.back);
+		}
+	}
+
+	@Override
+	public void onPeticionFinalizada(Context context, View view, boolean favorito) {
 		
-	    final Bitmap bitmap = getBitmapFromMemCache(imageKey);
-	    if (bitmap != null) {
-	    	imgCartaImagen.setImageBitmap(bitmap);
-	    	imgCartaImagen.setTag(1);
-	    } else {
-	    	imgCartaImagen.setImageResource(R.drawable.back);
-	    	imgCartaImagen.setTag(R.drawable.back);
-	    }
+		ckbFavorito.setChecked(favorito);
+		progressFavorito.setVisibility(View.INVISIBLE);
+		ckbFavorito.setVisibility(View.VISIBLE);
+		
 	}
 
 

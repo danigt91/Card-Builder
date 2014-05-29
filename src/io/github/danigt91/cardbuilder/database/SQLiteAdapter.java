@@ -137,6 +137,29 @@ public class SQLiteAdapter
 			throw mSQLException;
 		}
 	}
+	
+	
+	public Cursor getListadoCartasPorId(String... ids){
+		try
+		{	
+			String idsAux = "0";
+			for(int i=0; i < ids.length; i++){
+				idsAux += ", "+ids[i];
+			}
+			String query = "SELECT * FROM " + DetalleCarta.DETALLECARTA_TABLE_NAME + " WHERE " + DetalleCarta._ID + " IN(" + idsAux + ") ORDER BY "+DetalleCarta.DEFAULT_SORT_ORDER;
+			Cursor mCur = mDb.rawQuery(query, new String[]{});
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
+			return mCur;
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
 
 
 

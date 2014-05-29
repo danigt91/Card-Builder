@@ -59,7 +59,6 @@ public class ListaCartasAdapter extends CursorAdapter {
             holder = new ViewHolder();
             holder.nombreCarta = (TextView) view.findViewById(R.id.txtNombreCartaItem);
             holder.setCarta = (TextView) view.findViewById(R.id.txtSetCartaItem);
-            holder.favorito = (CheckBox) view.findViewById(R.id.ckbFavorito);
             view.setTag(holder);
         }        
         holder.nombreCarta.setText(cursor.getString(cursor.getColumnIndex(Contrato.ListadoCartas.CARD_NAME)));
@@ -107,9 +106,9 @@ public class ListaCartasAdapter extends CursorAdapter {
 		
 		private TextView nombreCarta;
 		private TextView setCarta;
-		private CheckBox favorito;
 		
 	}
+	
 
 	
 

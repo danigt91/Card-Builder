@@ -17,6 +17,14 @@
             android:layout_weight="60"
             android:orientation="vertical" >
 
+            <CheckBox
+                android:id="@+id/ckbFavorito"
+                style="?android:attr/starStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
             <TextView
                 android:id="@+id/txtCartaNombre"
                 android:layout_width="wrap_content"
@@ -101,17 +109,32 @@
 
         <AbsoluteLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="0dp"
+            android:layout_weight="80" >
 
-            <ImageView
-                android:id="@+id/imgCartaImagen"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent" >
 
-            <ProgressBar
-                android:id="@+id/progressImagen"
+                <ImageView
+                    android:id="@+id/imgCartaImagen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical|center_horizontal" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent" >
+
+                <ProgressBar
+                    android:id="@+id/progressImagen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical|center_horizontal" />
+            </RelativeLayout>
         </AbsoluteLayout>
     </LinearLayout>
 

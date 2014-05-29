@@ -2,20 +2,30 @@ package io.github.danigt91.cardbuilder.controller;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
+import io.github.danigt91.cardbuilder.R;
+import io.github.danigt91.cardbuilder.activity.BusquedaActivity;
+import io.github.danigt91.cardbuilder.activity.CartaDetalleActivity;
 import io.github.danigt91.cardbuilder.async.MyHttpPostFavorito;
 import io.github.danigt91.cardbuilder.async.MyHttpPostLogin;
+import io.github.danigt91.cardbuilder.async.MyHttpPostMisFavoritos;
 import io.github.danigt91.cardbuilder.async.MyHttpPostObject;
 import io.github.danigt91.cardbuilder.database.Contrato;
 import io.github.danigt91.cardbuilder.database.SQLiteAdapter;
 import io.github.danigt91.cardbuilder.entity.Baraja;
 import io.github.danigt91.cardbuilder.entity.Carta;
+import io.github.danigt91.cardbuilder.fragment.CartaDetalleFragment;
+import io.github.danigt91.cardbuilder.listener.FavoritoListener;
 
 public class CartaManejador {
 	
 	public static final String id = "idCarta";
 	
 	public static final String esFavoritaAction = "esFavorita";
-	public static final String toggleFavoritaAction = "toggleFavoritaAction";
+	public static final String toggleFavoritaAction = "toggleFavorita";
+	public static final String misFavoritosAction = "misFavoritos";
 	
 	public static Carta obtenerCartaBasica(Context context, int id){
 		Carta c = new Carta();
@@ -59,7 +69,8 @@ public class CartaManejador {
 	}
 	
 	
-	public static void esFavorita(Context context, long idCarta){
+	public static MyHttpPostFavorito esFavorita(Context context, View view, long idCarta){
+		MyHttpPostFavorito myPost = null;
 		long idUsuario = SesionManejador.idUsuarioLogueado(context);
 		if(idUsuario > 0){
 			String[][] parametros = new String[2][2];
@@ -69,13 +80,15 @@ public class CartaManejador {
 			//Creamos nuestro objeto de MyHttpPost para la petición
 			MyHttpPostObject mhpo = new MyHttpPostObject("http://magic.wmap.herobo.com/", CartaManejador.esFavoritaAction, parametros);
 			
-			MyHttpPostFavorito myPost = new MyHttpPostFavorito(context, idUsuario, idCarta);
+			myPost = new MyHttpPostFavorito(context, view);
 			//Ejecutamos la tarea asincrona con el MyHttpPostObject
 			myPost.execute(mhpo);
 		}
+		return myPost;
 	}
 	
-	public static void toggleFavorita(Context context, long idCarta){
+	public static MyHttpPostFavorito toggleFavorita(Context context, View view, long idCarta){
+		MyHttpPostFavorito myPost = null;
 		long idUsuario = SesionManejador.idUsuarioLogueado(context);
 		if(idUsuario > 0){
 			String[][] parametros = new String[2][2];
@@ -85,10 +98,29 @@ public class CartaManejador {
 			//Creamos nuestro objeto de MyHttpPost para la petición
 			MyHttpPostObject mhpo = new MyHttpPostObject("http://magic.wmap.herobo.com/", CartaManejador.toggleFavoritaAction, parametros);
 			
-			MyHttpPostFavorito myPost = new MyHttpPostFavorito(context, idUsuario, idCarta);
+			myPost = new MyHttpPostFavorito(context, view);
 			//Ejecutamos la tarea asincrona con el MyHttpPostObject
 			myPost.execute(mhpo);
 		}
+		return myPost;
+	}
+	
+	
+	public static MyHttpPostMisFavoritos misFavoritos(Context context){
+		MyHttpPostMisFavoritos myPost = null;
+		long idUsuario = SesionManejador.idUsuarioLogueado(context);
+		if(idUsuario > 0){
+			String[][] parametros = new String[1][2];
+			parametros[0] = new String[]{SesionManejador.id, idUsuario+""};
+
+			//Creamos nuestro objeto de MyHttpPost para la petición
+			MyHttpPostObject mhpo = new MyHttpPostObject("http://magic.wmap.herobo.com/", CartaManejador.misFavoritosAction, parametros);
+			
+			myPost = new MyHttpPostMisFavoritos(context);
+			//Ejecutamos la tarea asincrona con el MyHttpPostObject
+			myPost.execute(mhpo);
+		}
+		return myPost;
 	}
 
 }
