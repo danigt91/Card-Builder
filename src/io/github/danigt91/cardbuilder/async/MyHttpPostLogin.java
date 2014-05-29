@@ -43,15 +43,22 @@ public class MyHttpPostLogin extends MyHttpPost {
 		String resultado = super.result;		
 
 		//Comprobamos si el login es correcto
-		bLogin = resultado.equals("1");
+		long idUsuario = 0;
+		try{
+			idUsuario = Integer.valueOf(resultado);
+		}catch(NumberFormatException e){
+			Log.d("MyHttpPostLogin", "Error parseando id de usuario. "+e.getMessage());
+		}
+		bLogin = idUsuario > 0;
 		Log.d("MyHttpPostLogin", "Resultado login: "+resultado);
 
 		SharedPreferences sp = SesionManejador.getSesionSharedPreferences(context);
 		Editor spe = sp.edit();
 
+		spe.putLong(SesionManejador.id, idUsuario);
 		spe.putBoolean(SesionManejador.identificado, bLogin);
-		spe.putBoolean(SesionManejador.recordar, recordar && bLogin);		
-		if(bLogin){
+		spe.putBoolean(SesionManejador.recordar, recordar && bLogin);			
+		if(bLogin){			
 			spe.putString(SesionManejador.login, login);
 			spe.putString(SesionManejador.pass, pass);
 		}else{
@@ -83,12 +90,18 @@ public class MyHttpPostLogin extends MyHttpPost {
 				ia.recreateSesionIniciada();
 
 			}else{
-				//Avisamos si da error
-				if(super.result.equals("-1")){
-					Toast.makeText(context, "Error de login", Toast.LENGTH_SHORT).show();
-				}else if(super.result.equals("-2")){
-					Toast.makeText(context, "Error de registro", Toast.LENGTH_SHORT).show();
+				if(super.result != null){
+					Toast.makeText(context, "Error de conexion", Toast.LENGTH_SHORT).show();
+				}else{
+					if(super.result.equals("-1")){
+						Toast.makeText(context, "Error de login", Toast.LENGTH_SHORT).show();
+					}else if(super.result.equals("-2")){
+						Toast.makeText(context, "Error de registro", Toast.LENGTH_SHORT).show();
+					}else{
+						Toast.makeText(context, "Error de servidor", Toast.LENGTH_SHORT).show();
+					}
 				}
+				//Avisamos si da error				
 			}
 		}
 

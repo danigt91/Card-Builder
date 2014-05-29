@@ -18,6 +18,7 @@ public class SesionManejador {
 	 * @param recordar: Booleano para autologueo
 	 */
 
+	public static final String id = "idUsuario";
 	public static final String login = "login";
 	public static final String pass = "pass";
 	public static final String recordar = "recordar";
@@ -25,6 +26,11 @@ public class SesionManejador {
 	
 	public static final String loginAction = "login";
 	public static final String crearUsuarioAction = "crearUsuario";
+	
+	public static long idUsuarioLogueado(Context context){
+		SharedPreferences sp = SesionManejador.getSesionSharedPreferences(context);
+		return sp.getLong(SesionManejador.id, 0);
+	}
 
 	public static void iniciarSesion(Context context, String login, String pass, boolean recordar){
 
@@ -37,9 +43,9 @@ public class SesionManejador {
 			//Creamos nuestro objeto de MyHttpPost para la petición
 			MyHttpPostObject mhpo = new MyHttpPostObject("http://magic.wmap.herobo.com/", SesionManejador.loginAction, parametros);
 
-			//Creamos la tarea asincora que realizara el login
+			//Creamos la tarea asincrona que realizara el login
 			MyHttpPostLogin myPost = new MyHttpPostLogin(context, login, pass, recordar);
-			//Ejecutamos la tarea asincora con el MyHttpPostObject
+			//Ejecutamos la tarea asincrona con el MyHttpPostObject
 			myPost.execute(mhpo);			
 
 		}else{
@@ -58,6 +64,7 @@ public class SesionManejador {
 		SharedPreferences sp = SesionManejador.getSesionSharedPreferences(context);
 		Editor spe = sp.edit();
 
+		spe.putLong(SesionManejador.id, 0);
 		spe.putBoolean(SesionManejador.recordar, false);
 		spe.putBoolean(SesionManejador.identificado, false);
 		spe.putString(SesionManejador.login, null);
@@ -76,6 +83,7 @@ public class SesionManejador {
 		SharedPreferences sp = SesionManejador.getSesionSharedPreferences(context);
 		Editor spe = sp.edit();
 		//Cerramos la sesión abierta
+		spe.putLong(SesionManejador.id, 0);
 		spe.putBoolean(SesionManejador.identificado, false);
 
 		//Si está activo recordar no eliminamos la información para el autologueo
@@ -99,9 +107,9 @@ public class SesionManejador {
 			//Creamos nuestro objeto de MyHttpPost para la petición
 			MyHttpPostObject mhpo = new MyHttpPostObject("http://magic.wmap.herobo.com/", SesionManejador.crearUsuarioAction, parametros);
 
-			//Creamos la tarea asincora que realizara el login
+			//Creamos la tarea asincrona que realizara el login
 			MyHttpPostLogin myPost = new MyHttpPostLogin(context, login, pass, recordar);
-			//Ejecutamos la tarea asincora con el MyHttpPostObject
+			//Ejecutamos la tarea asincrona con el MyHttpPostObject
 			myPost.execute(mhpo);			
 
 		}else{

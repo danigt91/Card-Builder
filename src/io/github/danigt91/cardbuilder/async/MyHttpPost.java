@@ -31,7 +31,6 @@ public abstract class MyHttpPost extends AsyncTask<MyHttpPostObject, Void, Void>
 		super.onPostExecute(result);
 	}
 
-
 	protected InputStream downloadUrl(MyHttpPostObject myHttpPostObject) {
 		InputStream myInputStream = null;
 		StringBuilder sb = new StringBuilder();
@@ -69,14 +68,15 @@ public abstract class MyHttpPost extends AsyncTask<MyHttpPostObject, Void, Void>
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is), 4096);
 		String line;
 		StringBuilder sb =  new StringBuilder();
+		String contentOfMyInputStream = "";
 		try {
 			line = rd.readLine();
 			sb.append(line);
 			rd.close();
+			contentOfMyInputStream = sb.toString();
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String contentOfMyInputStream = sb.toString();
+			Log.d("MyHttpPost", e.getMessage());
+		}		
 		return contentOfMyInputStream;
 	}
 

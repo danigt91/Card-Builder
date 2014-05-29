@@ -15,12 +15,12 @@ import io.github.danigt91.cardbuilder.view.MyListView;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,6 +46,7 @@ public class ListaCartasAdapter extends CursorAdapter {
 					ListaCartasAdapter.this.index = index;
 					ListaCartasAdapter.this.top = top;
 				}
+				
 			});
 		}
 	}
@@ -58,10 +59,11 @@ public class ListaCartasAdapter extends CursorAdapter {
             holder = new ViewHolder();
             holder.nombreCarta = (TextView) view.findViewById(R.id.txtNombreCartaItem);
             holder.setCarta = (TextView) view.findViewById(R.id.txtSetCartaItem);
+            holder.favorito = (CheckBox) view.findViewById(R.id.ckbFavorito);
             view.setTag(holder);
         }        
         holder.nombreCarta.setText(cursor.getString(cursor.getColumnIndex(Contrato.ListadoCartas.CARD_NAME)));
-        holder.setCarta.setText(cursor.getString(cursor.getColumnIndex(Contrato.ListadoCartas.SET_NAME)));		
+        holder.setCarta.setText(cursor.getString(cursor.getColumnIndex(Contrato.ListadoCartas.SET_NAME)));
 	}
 
 	@Override
@@ -105,6 +107,7 @@ public class ListaCartasAdapter extends CursorAdapter {
 		
 		private TextView nombreCarta;
 		private TextView setCarta;
+		private CheckBox favorito;
 		
 	}
 

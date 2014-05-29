@@ -2,12 +2,20 @@ package io.github.danigt91.cardbuilder.controller;
 
 import android.content.Context;
 import android.database.Cursor;
+import io.github.danigt91.cardbuilder.async.MyHttpPostFavorito;
+import io.github.danigt91.cardbuilder.async.MyHttpPostLogin;
+import io.github.danigt91.cardbuilder.async.MyHttpPostObject;
 import io.github.danigt91.cardbuilder.database.Contrato;
 import io.github.danigt91.cardbuilder.database.SQLiteAdapter;
 import io.github.danigt91.cardbuilder.entity.Baraja;
 import io.github.danigt91.cardbuilder.entity.Carta;
 
 public class CartaManejador {
+	
+	public static final String id = "idCarta";
+	
+	public static final String esFavoritaAction = "esFavorita";
+	public static final String toggleFavoritaAction = "toggleFavoritaAction";
 	
 	public static Carta obtenerCartaBasica(Context context, int id){
 		Carta c = new Carta();
@@ -48,6 +56,39 @@ public class CartaManejador {
 	public static Carta obtenerCartaCompleta(int id){
 		Carta c = new Carta();
 		return c;
+	}
+	
+	
+	public static void esFavorita(Context context, long idCarta){
+		long idUsuario = SesionManejador.idUsuarioLogueado(context);
+		if(idUsuario > 0){
+			String[][] parametros = new String[2][2];
+			parametros[0] = new String[]{SesionManejador.id, idUsuario+""};
+			parametros[1] = new String[]{CartaManejador.id, idCarta+""};
+
+			//Creamos nuestro objeto de MyHttpPost para la petición
+			MyHttpPostObject mhpo = new MyHttpPostObject("http://magic.wmap.herobo.com/", CartaManejador.esFavoritaAction, parametros);
+			
+			MyHttpPostFavorito myPost = new MyHttpPostFavorito(context, idUsuario, idCarta);
+			//Ejecutamos la tarea asincrona con el MyHttpPostObject
+			myPost.execute(mhpo);
+		}
+	}
+	
+	public static void toggleFavorita(Context context, long idCarta){
+		long idUsuario = SesionManejador.idUsuarioLogueado(context);
+		if(idUsuario > 0){
+			String[][] parametros = new String[2][2];
+			parametros[0] = new String[]{SesionManejador.id, idUsuario+""};
+			parametros[1] = new String[]{CartaManejador.id, idCarta+""};
+
+			//Creamos nuestro objeto de MyHttpPost para la petición
+			MyHttpPostObject mhpo = new MyHttpPostObject("http://magic.wmap.herobo.com/", CartaManejador.toggleFavoritaAction, parametros);
+			
+			MyHttpPostFavorito myPost = new MyHttpPostFavorito(context, idUsuario, idCarta);
+			//Ejecutamos la tarea asincrona con el MyHttpPostObject
+			myPost.execute(mhpo);
+		}
 	}
 
 }

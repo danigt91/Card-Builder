@@ -55,6 +55,6 @@ public class MyListView extends ListView{
 
 	public void setMyListViewListener(MyListViewListener myListViewListener) {
 		this.myListViewListener = myListViewListener;
-	}	
+	}
 
 }

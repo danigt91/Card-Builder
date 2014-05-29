@@ -4,6 +4,6 @@ import android.widget.ListView;
 
 public interface MyListViewListener {
 	
-	public void onReposicionar(ListView lv, int index, int top);
+	public void onReposicionar(ListView lv, int index, int top);	
 
 }
