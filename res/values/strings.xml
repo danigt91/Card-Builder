@@ -30,5 +30,17 @@
     <string name="configuracion">Configuración</string>
     <string name="title_activity_favoritos">Favoritos</string>
     <string name="busqueda_nombre">Buscar por nombre</string>
+    <string name="lealtad">Lealtad: </string>
+    <string name="favorito_anadida">Añadida a favoritos</string>
+    <string name="favorito_eliminada">Eliminada de favoritos</string>
+    <string name="sesion_inciando_titulo">Iniciando Sesión</string>
+    <string name="sesion_inciando_mensaje">Espere unos segundos&#8230;</string>
+    <string name="sesion_iniciada">Sesión Iniciada</string>
+    <string name="sesion_cerrada">Sesión Cerrada</string>
+    <string name="sesion_error_conexion">Error de conexion</string>
+    <string name="sesion_error_servidor">Error de servidor</string>
+    <string name="sesion_error_login">Error de login</string>
+    <string name="sesion_error_registro">Error de registro</string>
+    <string name="busqueda_sin_resultados">Sin resultados</string>
 
 </resources>

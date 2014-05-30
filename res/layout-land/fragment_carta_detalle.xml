@@ -17,13 +17,35 @@
             android:layout_weight="60"
             android:orientation="vertical" >
 
-            <CheckBox
-                android:id="@+id/ckbFavorito"
-                style="?android:attr/starStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center" />
+            <AbsoluteLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <CheckBox
+                        android:id="@+id/ckbFavorito"
+                        style="?android:attr/starStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical|center_horizontal" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <ProgressBar
+                        android:id="@+id/progressFavorito"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical|center_horizontal" />
+                </RelativeLayout>
+            </AbsoluteLayout>
 
             <TextView
                 android:id="@+id/txtCartaNombre"
@@ -104,7 +126,8 @@
             android:id="@+id/txtCartaArtista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:textColor="@color/white" />
 
         <AbsoluteLayout

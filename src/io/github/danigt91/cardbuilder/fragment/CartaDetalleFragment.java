@@ -7,6 +7,7 @@ import io.github.danigt91.cardbuilder.activity.CartaGaleriaActivity;
 import io.github.danigt91.cardbuilder.async.DescargaImagenCarta;
 import io.github.danigt91.cardbuilder.async.MyHttpPostFavorito;
 import io.github.danigt91.cardbuilder.controller.CartaManejador;
+import io.github.danigt91.cardbuilder.controller.SesionManejador;
 import io.github.danigt91.cardbuilder.entity.Carta;
 import io.github.danigt91.cardbuilder.listener.DescargaImagenCartaListener;
 import io.github.danigt91.cardbuilder.listener.FavoritoListener;
@@ -95,6 +96,9 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 
 		ckbFavorito = (CheckBox) getActivity().findViewById(R.id.ckbFavorito);
 		progressFavorito = (ProgressBar) getActivity().findViewById(R.id.progressFavorito);
+		if(SesionManejador.idUsuarioLogueado(getActivity())==0){
+			progressFavorito.setVisibility(View.INVISIBLE);
+		}
 		ckbFavorito.setOnClickListener(this);
 
 		imgCartaImagen = (ImageView) getActivity().findViewById(R.id.imgCartaImagen);
@@ -123,7 +127,7 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 					}
 					firstTime = false;
 				}else{
-					progressFavorito.setVisibility(View.INVISIBLE);
+					progressFavorito.setVisibility(View.INVISIBLE);										
 				}
 			}
 		}
@@ -151,7 +155,7 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 			}else{
 				txtCartaPoder.setText("");
 			}
-			txtCartaLealtad.setText(validarStringNull(carta.getNloyalty()));
+			txtCartaLealtad.setText(carta.getNloyalty()==null?"":getResources().getString(R.string.lealtad)+validarStringNull(carta.getNloyalty()));
 			txtCartaArtista.setText(validarStringNull(carta.getNartist()));
 			txtCartaHabilidad.setText(validarStringNull(carta.getNability()));
 			txtCartaCita.setText(validarStringNull(carta.getNflavor()));
@@ -170,7 +174,7 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 		switch (v.getId()) {
 		case R.id.imgCartaImagen:
 
-			if((Integer) imgCartaImagen.getTag() ==  R.drawable.back && bitmap == null){
+			if((Integer) imgCartaImagen.getTag() ==  R.drawable.backdownload && bitmap == null){
 				if(carta.getNid()!=null){
 					//Cambiamos el tag para que no pueda seguir pulsando
 					imgCartaImagen.setTag(1);
@@ -237,8 +241,8 @@ public class CartaDetalleFragment extends Fragment implements OnClickListener, D
 			imgCartaImagen.setImageBitmap(bitmap);
 			imgCartaImagen.setTag(1);
 		} else {
-			imgCartaImagen.setImageResource(R.drawable.back);
-			imgCartaImagen.setTag(R.drawable.back);
+			imgCartaImagen.setImageResource(R.drawable.backdownload);
+			imgCartaImagen.setTag(R.drawable.backdownload);
 		}
 	}
 

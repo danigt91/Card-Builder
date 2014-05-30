@@ -144,7 +144,9 @@ public class SQLiteAdapter
 		{	
 			String idsAux = "0";
 			for(int i=0; i < ids.length; i++){
-				idsAux += ", "+ids[i];
+				if(!ids[i].equals("")){
+					idsAux += ", "+ids[i];
+				}				
 			}
 			String query = "SELECT * FROM " + DetalleCarta.DETALLECARTA_TABLE_NAME + " WHERE " + DetalleCarta._ID + " IN(" + idsAux + ") ORDER BY "+DetalleCarta.DEFAULT_SORT_ORDER;
 			Cursor mCur = mDb.rawQuery(query, new String[]{});

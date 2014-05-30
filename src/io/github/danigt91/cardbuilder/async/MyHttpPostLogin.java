@@ -42,7 +42,8 @@ public class MyHttpPostLogin extends MyHttpPost {
 		super.onPreExecute();
 		
 		//Antes de comprobar el login, activamos el dialogo de progreso
-		pd = ProgressDialog.show(context, "Iniciando Sesión", "Espere unos segundos...", true, false);		
+		pd = ProgressDialog.show(context, context.getResources().getString(R.string.sesion_inciando_titulo), 
+				context.getResources().getString(R.string.sesion_inciando_mensaje), true, false);		
 		
 	}
 	

@@ -89,7 +89,7 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 		listCartas.setAdapter(ca);
 
 		if(cursor.getCount()==0){
-			Toast.makeText(getActivity(), "Sin resultados", Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.busqueda_sin_resultados), Toast.LENGTH_LONG).show();
 		}
 
 	}
@@ -115,7 +115,7 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 		listCartas.setAdapter(ca);
 
 		if(cursor.getCount()==0){
-			Toast.makeText(getActivity(), "Sin resultados", Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.busqueda_sin_resultados), Toast.LENGTH_LONG).show();
 		}
 		
 	}

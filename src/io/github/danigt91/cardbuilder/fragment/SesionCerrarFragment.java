@@ -57,7 +57,7 @@ public class SesionCerrarFragment extends Fragment implements OnClickListener {
 				ft.commit();
 				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
 				
-				Toast.makeText(getActivity(), "Sesión Cerrada", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), getResources().getString(R.string.sesion_cerrada), Toast.LENGTH_SHORT).show();
 
 			}
 

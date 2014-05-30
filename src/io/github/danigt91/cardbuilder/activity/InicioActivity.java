@@ -55,7 +55,7 @@ public class InicioActivity extends FragmentActivity {
 		ft.add(R.id.frgLMenuInicioLogin, milf);
 		ft.commit();
 
-		Toast.makeText(this, "Sesión Iniciada", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getResources().getString(R.string.sesion_iniciada), Toast.LENGTH_SHORT).show();
     }
     
 }

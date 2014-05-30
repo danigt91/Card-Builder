@@ -47,14 +47,14 @@ public class SesionManejador {
 
 				}else{
 					if(codigo == null){
-						Toast.makeText(context, "Error de conexion", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, context.getResources().getString(R.string.sesion_error_conexion), Toast.LENGTH_SHORT).show();
 					}else{
 						if(codigo.equals("-1")){
-							Toast.makeText(context, "Error de login", Toast.LENGTH_SHORT).show();
+							Toast.makeText(context, context.getResources().getString(R.string.sesion_error_login), Toast.LENGTH_SHORT).show();
 						}else if(codigo.equals("-2")){
-							Toast.makeText(context, "Error de registro", Toast.LENGTH_SHORT).show();
+							Toast.makeText(context, context.getResources().getString(R.string.sesion_error_registro), Toast.LENGTH_SHORT).show();
 						}else{
-							Toast.makeText(context, "Error de servidor", Toast.LENGTH_SHORT).show();
+							Toast.makeText(context, context.getResources().getString(R.string.sesion_error_servidor), Toast.LENGTH_SHORT).show();
 						}
 					}
 					//Avisamos si da error				

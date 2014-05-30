@@ -1,5 +1,6 @@
 package io.github.danigt91.cardbuilder.async;
 
+import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.controller.CartaManejador;
 import io.github.danigt91.cardbuilder.listener.FavoritoListener;
 import android.app.ProgressDialog;
@@ -51,9 +52,9 @@ public class MyHttpPostFavorito extends MyHttpPost {
 		favoritoListener.onPeticionFinalizada(context, view, super.result.equals("1"));
 		if(accion.equals(CartaManejador.toggleFavoritaAction)){
 			if(super.result.equals("1")){
-				Toast.makeText(context, "Añadida a favoritos", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, context.getResources().getString(R.string.favorito_anadida), Toast.LENGTH_SHORT).show();
 			}else if(super.result.equals("-1")){
-				Toast.makeText(context, "Elinada de favoritos", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, context.getResources().getString(R.string.favorito_eliminada), Toast.LENGTH_SHORT).show();
 			}
 		}
 		
