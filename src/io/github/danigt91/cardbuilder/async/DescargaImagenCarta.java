@@ -1,5 +1,6 @@
 package io.github.danigt91.cardbuilder.async;
 
+import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.listener.DescargaImagenCartaListener;
 
 import java.io.InputStream;
@@ -13,18 +14,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class DescargaImagenCarta extends AsyncTask<String, Void, Bitmap> implements OnClickListener {
 	
 	private DescargaImagenCartaListener dicl;
 	
 	private Context context;
-	private ImageView bmImagen;
 
 	public DescargaImagenCarta(Context c, ImageView bmImage) {
 		bmImage.setOnClickListener(this);
 		this.context = c;
-		this.bmImagen = bmImage;
 	}
 
 	@Override
@@ -44,7 +44,11 @@ public class DescargaImagenCarta extends AsyncTask<String, Void, Bitmap> impleme
 	@Override
 	protected void onPostExecute(Bitmap result) {
 		
-		dicl.onDescargaFinalizada(result);		
+		if(result != null){
+			dicl.onDescargaFinalizada(result);	
+		}else{
+			Toast.makeText(context, context.getResources().getString(R.string.sin_conexion), Toast.LENGTH_SHORT).show();
+		}
 		
 	}
 	

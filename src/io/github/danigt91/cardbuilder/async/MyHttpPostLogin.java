@@ -1,11 +1,11 @@
 package io.github.danigt91.cardbuilder.async;
 
 import io.github.danigt91.cardbuilder.R;
-import io.github.danigt91.cardbuilder.activity.InicioActivity;
 import io.github.danigt91.cardbuilder.controller.SesionManejador;
 import io.github.danigt91.cardbuilder.listener.LoginListener;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
@@ -45,6 +45,15 @@ public class MyHttpPostLogin extends MyHttpPost {
 		pd = ProgressDialog.show(context, context.getResources().getString(R.string.sesion_inciando_titulo), 
 				context.getResources().getString(R.string.sesion_inciando_mensaje), true, false);		
 		
+		pd.setOnDismissListener(new DialogInterface.OnDismissListener(){
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				if(isCancelled()){
+					Toast.makeText(context, context.getResources().getString(R.string.sin_conexion), Toast.LENGTH_SHORT).show();
+				}				
+			}
+	    });
+		
 	}
 	
 
@@ -52,7 +61,17 @@ public class MyHttpPostLogin extends MyHttpPost {
 	protected Void doInBackground(MyHttpPostObject... params) {
 
 		super.doInBackground(params);
-		String resultado = super.result;		
+		if(isCancelled()){			
+			pd.dismiss();
+		}
+		if(super.result == null){
+			pd.dismiss();
+			Toast.makeText(context, context.getResources().getString(R.string.sin_conexion), Toast.LENGTH_SHORT).show();
+			cancel(true);
+			isCancelled();
+		}
+		
+		String resultado = super.result;				
 
 		//Comprobamos si el login es correcto
 		long idUsuario = 0;

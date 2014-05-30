@@ -1,15 +1,14 @@
 package io.github.danigt91.cardbuilder.async;
 
+import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.listener.MisFavoritosListener;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 public class MyHttpPostMisFavoritos extends MyHttpPost {
 	
 	private Context context;
-
-	private ProgressDialog pd;
 	
 	private MisFavoritosListener misFavoritosListener;
 
@@ -33,6 +32,16 @@ public class MyHttpPostMisFavoritos extends MyHttpPost {
 	@Override
 	protected Void doInBackground(MyHttpPostObject... params) {
 		super.doInBackground(params);
+		
+		if(isCancelled()){
+			Toast.makeText(context, context.getResources().getString(R.string.sin_conexion), Toast.LENGTH_SHORT).show();
+		}
+		
+		if(super.result == null){
+			Toast.makeText(context, context.getResources().getString(R.string.sin_conexion), Toast.LENGTH_SHORT).show();
+			cancel(true);
+			isCancelled();
+		}
 		
 		return null;
 	}

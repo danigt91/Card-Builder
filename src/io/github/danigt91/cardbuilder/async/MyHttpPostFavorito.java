@@ -3,7 +3,6 @@ package io.github.danigt91.cardbuilder.async;
 import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.controller.CartaManejador;
 import io.github.danigt91.cardbuilder.listener.FavoritoListener;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -33,12 +32,18 @@ public class MyHttpPostFavorito extends MyHttpPost {
 	@Override
 	protected void onPreExecute(){
 		super.onPreExecute();
-
+		
 	}
 
 	@Override
 	protected Void doInBackground(MyHttpPostObject... params) {
 		super.doInBackground(params);
+		
+		if(super.result == null){
+			Toast.makeText(context, context.getResources().getString(R.string.sin_conexion), Toast.LENGTH_SHORT).show();
+			cancel(true);
+			isCancelled();
+		}
 		
 		accion = params[0].accion;
 		

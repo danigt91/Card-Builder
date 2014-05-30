@@ -42,5 +42,63 @@
     <string name="sesion_error_login">Error de login</string>
     <string name="sesion_error_registro">Error de registro</string>
     <string name="busqueda_sin_resultados">Sin resultados</string>
+    <string name="sin_conexion">No tiene conexion a internet</string>
+    <string name="title_activity_busqueda_avanzada">BusquedaAvanzadaActivity</string>
+    <string name="carta_nombre">Nombre: </string>
+    <string name="carta_set">Set: </string>
+    <string name="carta_tipo">Tipo: </string>
+    <string name="carta_rareza">Rareza: </string>
+    <string name="carta_color">Color: </string>
+    <string name="carta_coste_mana">Coste de mana: </string>
+    <string name="carta_coste_mana_convertido">Coste de mana convertido: </string>
+    <string name="carta_poder">Poder: </string>
+    <string name="carta_defensa">Defensa: </string>
+    <string name="carta_lealtad">Lealtad: </string>
+    <string name="carta_habilidad">Habilidad: </string>
+    <string name="carta_cita">Cita: </string>
+    <string name="carta_artista">Artista: </string>
+    <string name="carta_rating">Rating: </string>
+    <string name="carta_reglas">Reglas: </string>
+    <string name="carta_mana_generado">Mana generado: </string>
+    <string name="carta_precio_bajo">Precio bajo: </string>
+    <string name="carta_precio_medio">Precio medio: </string>
+    <string name="carta_precio_alto">Precio alto: </string>
+    <string name="carta_nombre_otro_idioma">Nombre en otro idioma: </string>
+    <string name="carta_legalidad_block">Legalidad (Block): </string>
+    <string name="carta_legalidad_standard">Legalidad (Standard): </string>
+    <string name="carta_legalidad_extended">Legalidad (Extended): </string>
+    <string name="carta_legalidad_modern">Legalidad (Modern): </string>
+    <string name="carta_legalidad_legacy">Legalidad (Legacy): </string>
+    <string name="carta_legalidad_vintage">Legalidad (Vintage): </string>
+    <string name="carta_legalidad_highlander">Legalidad (Highlander): </string>
+    <string name="carta_legalidad_french_commander">Legalidad (French Commander): </string>
+    <string name="carta_legalidad_commander">Legalidad (Commander): </string>
+    <string name="carta_legalidad_peasant">Legalidad (Peasant): </string>
+    <string name="carta_legalidad_pauper">Legalidad (Pauper): </string>
+    <string name="rareza_c">Común</string>
+    <string name="rareza_u">No común</string>
+    <string name="rareza_r">Rara</string>
+    <string name="rareza_m">Mítica</string>
+    <string name="rareza_t">Timeshifted</string>
+    <string name="color_blanco">Blanco</string>
+    <string name="color_rojo">Rojo</string>
+    <string name="color_azul">Azul</string>
+    <string name="color_negro">Negro</string>
+    <string name="color_verde">Verde</string>
+    <string name="color_incoloro">Incoloro</string>
+
+    <string-array name="y_o">
+        <item>O (Ej: Rojo o Verde)</item>
+        <item>Y (Ej: Rojo y Verde)</item>
+        <item>No (Ej: Ni Rojo Ni Verde)</item>
+    </string-array>
+    <string-array name="igual_mayor_menor">
+        <item>No filtrar</item>
+        <item>=</item>
+        <item>&gt;</item>
+        <item>&lt;</item>
+        <item>&gt;=</item>
+        <item>&lt;=</item>
+    </string-array>
 
 </resources>

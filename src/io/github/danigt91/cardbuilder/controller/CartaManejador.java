@@ -64,6 +64,7 @@ public class CartaManejador {
 	}
 	
 	public static Carta obtenerCartaCompleta(int id){
+		// TODO
 		Carta c = new Carta();
 		return c;
 	}

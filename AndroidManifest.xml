@@ -45,6 +45,10 @@
             android:name="io.github.danigt91.cardbuilder.activity.FavoritosActivity"
             android:label="@string/title_activity_favoritos" >
         </activity>
+        <activity
+            android:name="io.github.danigt91.cardbuilder.activity.BusquedaAvanzadaActivity"
+            android:label="@string/title_activity_busqueda_avanzada" >
+        </activity>
     </application>
 
 </manifest>

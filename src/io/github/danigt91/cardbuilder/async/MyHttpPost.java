@@ -21,7 +21,11 @@ public abstract class MyHttpPost extends AsyncTask<MyHttpPostObject, Void, Void>
 
 		InputStream is = downloadUrl(params[0]);
 		//Asignamos el String de salida de la petición
-		result = inputStreamToString(is);
+		if(is != null){
+			result = inputStreamToString(is);
+		}else{
+			this.cancel(true);
+		}
 
 		return null;
 	}
@@ -55,7 +59,7 @@ public abstract class MyHttpPost extends AsyncTask<MyHttpPostObject, Void, Void>
 			//Asignamos el stream de entrada
 			myInputStream = conn.getInputStream();
 			wr.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			Log.d("MyHttpPost",e.getMessage());
 		}
 		return myInputStream;

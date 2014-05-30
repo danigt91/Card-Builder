@@ -12,8 +12,10 @@
 package io.github.danigt91.cardbuilder.fragment;
 
 import io.github.danigt91.cardbuilder.R;
+import io.github.danigt91.cardbuilder.activity.BusquedaAvanzadaActivity;
 import io.github.danigt91.cardbuilder.listener.BusquedaSimpleListener;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -28,7 +30,7 @@ import android.widget.EditText;
 public class BusquedaSimpleFragment extends Fragment implements OnClickListener {
 
 	private EditText etxtBusquedaSimple;
-	private Button btnBusquedaSimple;
+	private Button btnBusquedaSimple, btnBusquedaAvanzada;
 
 	private boolean buscando;
 
@@ -67,7 +69,10 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 		etxtBusquedaSimple = (EditText) getActivity().findViewById(R.id.etxtBusquedaSimple);
 
 		btnBusquedaSimple = (Button) getActivity().findViewById(R.id.btnBusquedaSimple);
-		btnBusquedaSimple.setOnClickListener(this);		
+		btnBusquedaSimple.setOnClickListener(this);
+		
+		btnBusquedaAvanzada = (Button) getActivity().findViewById(R.id.btnBusquedaAvanzada);
+		btnBusquedaAvanzada.setOnClickListener(this);
 
 	}
 
@@ -105,6 +110,12 @@ public class BusquedaSimpleFragment extends Fragment implements OnClickListener 
 					Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(etxtBusquedaSimple.getWindowToken(), 0);
 
+			break;
+			
+		case R.id.btnBusquedaAvanzada:
+			
+			startActivity(new Intent(getActivity(), BusquedaAvanzadaActivity.class));
+			
 			break;
 
 		default:
