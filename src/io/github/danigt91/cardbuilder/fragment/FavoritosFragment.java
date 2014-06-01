@@ -4,7 +4,7 @@ import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.async.MyHttpPostMisFavoritos;
 import io.github.danigt91.cardbuilder.controller.CartaManejador;
 import io.github.danigt91.cardbuilder.listener.BusquedaFavoritosListener;
-import io.github.danigt91.cardbuilder.listener.BusquedaSimpleListener;
+import io.github.danigt91.cardbuilder.listener.BusquedaListener;
 import io.github.danigt91.cardbuilder.listener.MisFavoritosListener;
 import android.content.Context;
 import android.os.Bundle;

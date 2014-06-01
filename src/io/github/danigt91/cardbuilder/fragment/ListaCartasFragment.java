@@ -1,6 +1,6 @@
 package io.github.danigt91.cardbuilder.fragment;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 import io.github.danigt91.cardbuilder.R;
 import io.github.danigt91.cardbuilder.activity.CartaDetalleActivity;
@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,10 +69,12 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		if(mDbHelper != null && cursor!=null){
+		if(cursor!=null){
 			cursor.close();
-			mDbHelper.close();
 		}
+		if(mDbHelper != null){
+			mDbHelper.close();
+		}		
 	}
 
 
@@ -95,8 +96,20 @@ public class ListaCartasFragment extends Fragment implements OnItemClickListener
 	}
 
 
-	public void busquedaByCriteria(Map<String, Object> criterios){
-		// TODO
+	public void busquedaByCriteria(ArrayList<String> criterios){
+		
+		mDbHelper = new SQLiteAdapter(getActivity());            
+		mDbHelper.open();
+
+		cursor = mDbHelper.getListadoCartasPorCriterio(criterios);
+		ListaCartasAdapter ca = new ListaCartasAdapter(getActivity(), cursor, 0, listCartas);
+
+		listCartas.setAdapter(ca);
+
+		if(cursor.getCount()==0){
+			Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.busqueda_sin_resultados), Toast.LENGTH_LONG).show();
+		}
+		
 	}
 	
 	

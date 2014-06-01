@@ -63,7 +63,7 @@
     <string name="carta_precio_bajo">Precio bajo: </string>
     <string name="carta_precio_medio">Precio medio: </string>
     <string name="carta_precio_alto">Precio alto: </string>
-    <string name="carta_nombre_otro_idioma">Nombre en otro idioma: </string>
+    <string name="carta_nombre_otro_idioma">Nombre en otros idiomas</string>
     <string name="carta_legalidad_block">Legalidad (Block): </string>
     <string name="carta_legalidad_standard">Legalidad (Standard): </string>
     <string name="carta_legalidad_extended">Legalidad (Extended): </string>
@@ -88,6 +88,7 @@
     <string name="color_incoloro">Incoloro</string>
 
     <string-array name="y_o">
+        <item>No filtrar</item>
         <item>O (Ej: Rojo o Verde)</item>
         <item>Y (Ej: Rojo y Verde)</item>
         <item>No (Ej: Ni Rojo Ni Verde)</item>
@@ -99,6 +100,12 @@
         <item>&lt;</item>
         <item>&gt;=</item>
         <item>&lt;=</item>
+    </string-array>
+    
+    <string-array name="legalidad_items">
+        <item>No filtrar</item>
+        <item>Permitido</item>
+        <item>Bloqueado</item>
     </string-array>
 
 </resources>

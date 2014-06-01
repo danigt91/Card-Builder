@@ -1,21 +1,23 @@
 package io.github.danigt91.cardbuilder.activity;
 
+import java.util.ArrayList;
+
 import io.github.danigt91.cardbuilder.R;
-import io.github.danigt91.cardbuilder.fragment.BusquedaSimpleFragment;
+import io.github.danigt91.cardbuilder.fragment.BusquedaFragment;
 import io.github.danigt91.cardbuilder.fragment.ListaCartasFragment;
-import io.github.danigt91.cardbuilder.listener.BusquedaSimpleListener;
+import io.github.danigt91.cardbuilder.listener.BusquedaListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
-public class BusquedaActivity extends FragmentActivity implements BusquedaSimpleListener {
+public class BusquedaActivity extends FragmentActivity implements BusquedaListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_busqueda);
 		
-		BusquedaSimpleFragment bsf = (BusquedaSimpleFragment) getSupportFragmentManager().findFragmentById(R.id.frgBusquedaSimple);
+		BusquedaFragment bsf = (BusquedaFragment) getSupportFragmentManager().findFragmentById(R.id.frgBusquedaSimple);
 		bsf.setBusquedaSimpleListener(this);
 		
 	}
@@ -38,6 +40,19 @@ public class BusquedaActivity extends FragmentActivity implements BusquedaSimple
 		//Obtiene el Fragmento contenedor del ListView y llama a su método busquedaByNombre para rellenarlo
 		ListaCartasFragment lcf = (ListaCartasFragment) getSupportFragmentManager().findFragmentById(R.id.frgListaCartas);
 		lcf.busquedaByNombre(nombre);
+		//Reposiciona la posicion de scroll del ListView
+		lcf.getMyListView().reposicionar();
+	}
+
+	@Override
+	public void onBusquedaAvanzada(ArrayList<String> criterios) {
+		busquedaAvanzada(criterios);		
+	}
+	
+	private void busquedaAvanzada(ArrayList<String> criterios){
+		//Obtiene el Fragmento contenedor del ListView y llama a su método busquedaByNombre para rellenarlo
+		ListaCartasFragment lcf = (ListaCartasFragment) getSupportFragmentManager().findFragmentById(R.id.frgListaCartas);
+		lcf.busquedaByCriteria(criterios);
 		//Reposiciona la posicion de scroll del ListView
 		lcf.getMyListView().reposicionar();
 	}

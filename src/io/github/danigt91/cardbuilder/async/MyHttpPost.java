@@ -13,7 +13,7 @@ import android.util.Log;
 
 //'Negamos' la implementacion de esta clase, esto se hará a través de sus subclases
 public abstract class MyHttpPost extends AsyncTask<MyHttpPostObject, Void, Void> {
-	
+
 	protected String result;
 
 	@Override
@@ -37,14 +37,14 @@ public abstract class MyHttpPost extends AsyncTask<MyHttpPostObject, Void, Void>
 
 	protected InputStream downloadUrl(MyHttpPostObject myHttpPostObject) {
 		InputStream myInputStream = null;
-		StringBuilder sb = new StringBuilder();
-		//Añadimos la acción de la petición
-		sb.append("accion="+myHttpPostObject.accion);
-		//Añadimos los parametros POST
-		for(String[] s: myHttpPostObject.parametros){
-			sb.append("&"+s[0]+"="+s[1]);
-		}
 		try {
+			StringBuilder sb = new StringBuilder();
+			//Añadimos la acción de la petición
+			sb.append("accion="+myHttpPostObject.accion);
+			//Añadimos los parametros POST
+			for(String[] s: myHttpPostObject.parametros){
+				sb.append("&"+s[0]+"="+s[1]);
+			}
 			//Creamos la conexion
 			URL url = new URL(myHttpPostObject.host);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();

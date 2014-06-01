@@ -3,8 +3,11 @@ package io.github.danigt91.cardbuilder.database;
 import io.github.danigt91.cardbuilder.database.Contrato.Cards;
 import io.github.danigt91.cardbuilder.database.Contrato.DetalleCarta;
 import io.github.danigt91.cardbuilder.database.Contrato.ListadoCartas;
+import io.github.danigt91.cardbuilder.database.Contrato.Sets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -95,11 +98,11 @@ public class SQLiteAdapter
 		}
 		catch (SQLException mSQLException) 
 		{
-			Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+			Log.e(TAG, "getCartasPorNname >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
 	}
-	
+
 	//Busqueda simple - Realiza la busqueda por la vista listadoCartas filtrando por el nombre en ingles
 	public Cursor getListadoCartasPorNname(String name)
 	{
@@ -114,7 +117,7 @@ public class SQLiteAdapter
 		}
 		catch (SQLException mSQLException) 
 		{
-			Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+			Log.e(TAG, "getListadoCartasPorNname >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
 	}
@@ -133,12 +136,12 @@ public class SQLiteAdapter
 		}
 		catch (SQLException mSQLException) 
 		{
-			Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+			Log.e(TAG, "getCartaBasicaPorId >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
 	}
-	
-	
+
+
 	public Cursor getListadoCartasPorId(String... ids){
 		try
 		{	
@@ -158,7 +161,41 @@ public class SQLiteAdapter
 		}
 		catch (SQLException mSQLException) 
 		{
-			Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+			Log.e(TAG, "getListadoCartasPorId >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
+
+	public Cursor getListadoCartasPorCriterio(ArrayList<String> criterios){
+		return getListadoCartasPorCriterio(criterios, null);
+	}
+
+	//Busqueda simple - Realiza la busqueda por la vista listadoCartas filtrando por el nombre en ingles
+	public Cursor getListadoCartasPorCriterio(ArrayList<String> criterios, String order)
+	{
+		try
+		{
+			String query = "SELECT * FROM "+ListadoCartas.LISTADOCARTAS_TABLE_NAME+" WHERE _id IN(SELECT " + Cards.CARDS_TABLE_NAME+"."+Cards._ID + " FROM "+Cards.CARDS_TABLE_NAME+
+					"  INNER JOIN " + Sets.SETS_TABLE_NAME + " ON " + Cards.CARDS_TABLE_NAME+"."+Cards.CARD_SET + " = " + Sets.SETS_TABLE_NAME+"."+Sets.SET_CODE + 
+					" WHERE 1=1";
+			for(int i = 0; i < criterios.size(); i++){
+				query += " AND " + criterios.get(i);
+			}
+			if(order != null && !order.equals("")){
+				query += " ORDER BY "+order;
+			}
+			query += ")";
+			Log.d("SQLiteAdapter - getListadoCartasPorCriterio: ", query);
+			Cursor mCur = mDb.rawQuery(query, new String[]{});
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
+			return mCur;
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "getListadoCartasPorCriterio >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
 	}

@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/frgBusquedaSimple"
-        android:name="io.github.danigt91.cardbuilder.fragment.BusquedaSimpleFragment"
+        android:name="io.github.danigt91.cardbuilder.fragment.BusquedaFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
